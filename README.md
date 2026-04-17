@@ -2,9 +2,38 @@
 
 ## Summary
 
-This repository contains a Python based simulation of a Brewery manufacturing process to exercise the capabilities of IoT SiteWise (Monitor), IoT Greengrass, IoT TwinMaker, and other IoT based AWS services that constantly runs and produces factory like data exposed via an OPC UA Server (a cross-platform, open-source, IEC62541 standard for data exchange from sensors to cloud applications developed by the OPC Foundation) for consumption by an OPC UA Client (like the IoT SiteWise OPC UA Collector). In addition, you can configure the publishing of values directly to IoT SiteWise at a specified interval. 
+This repository is a fork of [aws-solutions-library-samples/breweries-sitewise-simulator](https://github.com/aws-solutions-library-samples/breweries-sitewise-simulator) with modifications to support **local-only operation** without any AWS account or credentials.
 
-Feel free to run this python simulator in your own environment manually or through a quick deploy using the cloudformation templates below.
+It contains a Python based simulation of a Brewery manufacturing process that constantly runs and produces factory like data exposed via an OPC UA Server (a cross-platform, open-source, IEC62541 standard for data exchange from sensors to cloud applications developed by the OPC Foundation) for consumption by any OPC UA Client.
+
+### What's changed from upstream
+
+- The `boto3` SiteWise client is only initialized when `--publishtositewise=True` is passed, allowing the simulator to run locally without AWS credentials.
+
+<hr>
+
+## Local-Only Quick Start (No AWS Required)
+
+1. **Prerequisites:** Python 3.10+
+
+2. **Clone and install:**
+   ```bash
+   git clone https://github.com/robertdenirosbiro/breweries-sitewise-simulator.git
+   cd breweries-sitewise-simulator
+   python3 -m venv venv
+   source venv/bin/activate
+   pip install opcua boto3 cryptography lxml pytz
+   ```
+
+3. **Run the simulator:**
+   ```bash
+   cd Breweries
+   python3 awsBrewSimServer.py
+   ```
+
+4. **Connect any OPC UA client to:** `opc.tcp://<your-ip>:4841/server/`
+
+   No authentication or encryption is required. The server binds to `0.0.0.0:4841`.
 
 <hr>
 

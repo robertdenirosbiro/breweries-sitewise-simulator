@@ -388,7 +388,9 @@ if __name__ == "__main__":
     region = args.region
     
     # Initailize IoT SiteWise Client connection
-    client = boto3.client('iotsitewise', region_name=region)
+    client = None
+    if publishtositewise:
+        client = boto3.client('iotsitewise', region_name=region)
     
     # Initailize OPC UA Server
     server = Server()        
