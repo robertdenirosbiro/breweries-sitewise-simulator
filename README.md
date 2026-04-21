@@ -35,6 +35,16 @@ It contains a Python based simulation of a Brewery manufacturing process that co
 
    No authentication or encryption is required. The server binds to `0.0.0.0:4841`.
 
+### Running as a Windows Scheduled Task
+
+If you register this as a Scheduled Task (e.g. to auto-start on boot), **set `ExecutionTimeLimit` to unlimited**. `New-ScheduledTaskSettingsSet` defaults it to `PT72H`, which will kill the simulator after exactly 72 hours. The task is then idle until the next reboot, so if your machine has long uptime it stays dead. Use:
+
+```powershell
+New-ScheduledTaskSettingsSet -ExecutionTimeLimit (New-TimeSpan -Seconds 0) ...
+```
+
+(Equivalent in `schtasks.exe`: `/RI 0` won't do it — edit the task XML's `<ExecutionTimeLimit>PT0S</ExecutionTimeLimit>` directly, or use the PowerShell cmdlets above.)
+
 <hr>
 
 ## Simulation Description
